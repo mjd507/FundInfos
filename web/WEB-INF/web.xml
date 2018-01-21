@@ -4,11 +4,15 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
   <servlet>
-    <servlet-name>test</servlet-name>
-    <servlet-class>com.servlet.FundServlet</servlet-class>
+    <!--<servlet-name>getFundInfo</servlet-name>-->
+    <!--<servlet-class>com.servlet.FundFindServlet</servlet-class>-->
+    <servlet-name>writeFundInfo</servlet-name>
+    <servlet-class>com.servlet.FundUpdateServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>test</servlet-name>
-    <url-pattern>/test</url-pattern>
+    <!--<servlet-name>getFundInfo</servlet-name>-->
+    <!--<url-pattern>/getFundInfo</url-pattern>-->
+    <servlet-name>writeFundInfo</servlet-name>
+    <url-pattern>/writeFundInfo</url-pattern>
   </servlet-mapping>
 </web-app>

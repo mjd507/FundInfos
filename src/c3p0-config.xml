@@ -1,8 +1,6 @@
-<?xml version="1.0"encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <c3p0-config>
-
-  <!-- 默认配置，如果没有指定则使用这个配置 -->
   <default-config>
     <property name="driverClass">com.mysql.jdbc.Driver</property>
     <property name="jdbcUrl">jdbc:mysql://localhost:3306/FundInfo</property>

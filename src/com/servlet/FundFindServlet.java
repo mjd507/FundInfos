@@ -1,29 +1,26 @@
 package com.servlet;
 
+import com.beans.FundInfoAll;
+import com.service.FundFindService;
+import com.service.FundUpdateService;
+import com.service.IFundFindService;
+import com.service.IFundUpdateService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
-public class FundServlet extends HttpServlet {
+public class FundFindServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doGet(req, resp);
-        String jsonStr = "hello";
-        PrintWriter out = null;
-        try {
-            out = resp.getWriter();
-            out.write(jsonStr);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-        }
+        resp.setContentType("text/json; charset=UTF-8");
+
+        IFundFindService findService =new FundFindService();
+        findService.getHistoryFundInfoFromAniu();
     }
 
     @Override

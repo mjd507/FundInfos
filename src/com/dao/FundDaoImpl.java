@@ -13,15 +13,14 @@ import java.util.ArrayList;
 public class FundDaoImpl implements IFundDao {
 
     private final JdbcUtil jdbcUtil;
-    private final String COLUMN_FUND_DATE = "fundDate";
-    private final String COLUMN_FUND_INFO = "fundInfo";
+
 
     public FundDaoImpl() {
         jdbcUtil = JdbcUtil.getInstance();
     }
 
-    @Override
-    public ArrayList<FundInfoAll> getHistoryFundInfo(String tableName) {
+
+    private ArrayList<FundInfoAll> getHistoryFundInfo(String tableName) {
         ArrayList<FundInfoAll> infos = new ArrayList<>();
         String sql = "SELECT * FROM " + tableName;
         Connection conn = null;
@@ -33,8 +32,8 @@ public class FundDaoImpl implements IFundDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 FundInfoAll all = new FundInfoAll();
-                String fundDate = rs.getString("fundDate");
-                String fundInfo = rs.getString("fundInfo");
+                String fundDate = rs.getString(COLUMN_FUND_DATE);
+                String fundInfo = rs.getString(COLUMN_FUND_INFO);
                 all.setFundDate(fundDate);
                 all.setFundInfo(fundInfo);
                 infos.add(all);
@@ -48,8 +47,8 @@ public class FundDaoImpl implements IFundDao {
         return infos;
     }
 
-    @Override
-    public boolean hasDayFundInfo(String tableName, String date) {
+
+    private boolean hasDayFundInfo(String tableName, String date) {
         String sql = "SELECT * FROM " + tableName + " WHERE " + COLUMN_FUND_DATE + " = " + date;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -68,8 +67,7 @@ public class FundDaoImpl implements IFundDao {
 
     }
 
-    @Override
-    public boolean addFundInfo(String tableName, String values) {
+    private boolean addFundInfo(String tableName, String values) {
         String todayStr = DateUtils.getTodayStr();
         if (hasDayFundInfo(tableName, todayStr)) {
             return updateFundInfo(tableName, values);
@@ -93,8 +91,7 @@ public class FundDaoImpl implements IFundDao {
 
     }
 
-    @Override
-    public boolean updateFundInfo(String tableName, String values) {
+    private boolean updateFundInfo(String tableName, String values) {
         String todayStr = DateUtils.getTodayStr();
         if (!hasDayFundInfo(tableName, todayStr)) {
             return addFundInfo(tableName, values);
@@ -118,4 +115,48 @@ public class FundDaoImpl implements IFundDao {
 
     }
 
+    @Override
+    public ArrayList<FundInfoAll> getHistoryFundInfoFromAniu() {
+        return getHistoryFundInfo(TABLE_A_NIU);
+    }
+
+    @Override
+    public ArrayList<FundInfoAll> getHistoryFundInfoFromQieMan() {
+        return getHistoryFundInfo(TABLE_QIE_MAN);
+    }
+
+    @Override
+    public ArrayList<FundInfoAll> getHistoryFundInfoFromZhiShuValue() {
+        return getHistoryFundInfo(TABLE_ZHI_SHU_VALUE);
+    }
+
+    @Override
+    public boolean addFundInfoFromAniu(String values) {
+        return addFundInfo(TABLE_A_NIU, values);
+    }
+
+    @Override
+    public boolean addFundInfoFromQieMan(String values) {
+        return addFundInfo(TABLE_QIE_MAN, values);
+    }
+
+    @Override
+    public boolean addFundInfoFromZhiShuValue(String values) {
+        return addFundInfo(TABLE_ZHI_SHU_VALUE, values);
+    }
+
+    @Override
+    public boolean updateFundInfoFromAniu(String values) {
+        return updateFundInfo(TABLE_A_NIU, values);
+    }
+
+    @Override
+    public boolean updateFundInfoFromQieMan(String values) {
+        return updateFundInfo(TABLE_QIE_MAN, values);
+    }
+
+    @Override
+    public boolean updateFundInfoFromZhiShuValue(String values) {
+        return updateFundInfo(TABLE_ZHI_SHU_VALUE, values);
+    }
 }
