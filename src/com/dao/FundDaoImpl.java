@@ -49,7 +49,7 @@ public class FundDaoImpl implements IFundDao {
 
 
     private boolean hasDayFundInfo(String tableName, String date) {
-        String sql = "SELECT * FROM " + tableName + " WHERE " + COLUMN_FUND_DATE + " = " + date;
+        String sql = "SELECT * FROM " + tableName + " WHERE " + COLUMN_FUND_DATE + " = \'" + date + "\'";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

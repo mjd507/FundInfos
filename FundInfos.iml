@@ -20,15 +20,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M22" level="application_server_libraries" />
-    <orderEntry type="module-library">
-      <library name="c3p0-0.9.1.2">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/c3p0-0.9.1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-5.1.9" level="project" />
+    <orderEntry type="library" name="c3p0:c3p0:0.9.1.2" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:6.0.6" level="project" />
   </component>
 </module>

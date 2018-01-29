@@ -9,7 +9,7 @@ public class DateUtils {
         System.out.println(todayStr);
     }
 
-    public static String getTodayStr(){
+    public static String getTodayStr() {
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
         return format.format(new Date());
     }
