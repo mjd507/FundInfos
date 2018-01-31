@@ -1,5 +1,6 @@
 package com.servlet;
 
+import com.google.gson.Gson;
 import com.service.FundUpdateService;
 import com.service.IFundUpdateService;
 
@@ -18,24 +19,34 @@ public class FundUpdateServlet extends HttpServlet {
     private static final String URL_A_NIU = "https://m.aniu.com.cn/fof_pe_share/";
     private static final String URL_ZhiShuValue = "https://data.etfquant.cn/daily_pe_wxApp.json";
     private static final String URL_QIEMAN = "https://qieman.com/pmdj/v2/idx-eval/latest?msrc=WXA1001";
+    private IFundUpdateService updateService;
+
+    class WriteMsg {
+        boolean aniu;
+        boolean qieman;
+        boolean zhishu;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setContentType("text/json; charset=UTF-8");
-
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json; charset=utf-8");
 
         String toadyAniu = getTodayInfo(URL_A_NIU);
+        updateService = new FundUpdateService();
+
+        WriteMsg msg = new WriteMsg();
+        msg.aniu = toadyAniu != null && updateService.addFundInfoFromAniu(toadyAniu);
+
         String todayQieMan = getTodayInfo(URL_QIEMAN);
+        msg.qieman = todayQieMan != null && updateService.addFundInfoFromQieMan(todayQieMan);
+
         String todayZhiShu = getTodayInfo(URL_ZhiShuValue);
-        if (todayQieMan != null) {
-            IFundUpdateService updateService = new FundUpdateService();
-            boolean isAdd = updateService.addFundInfoFromQieMan(todayQieMan);
-            String msg = "aniu data write to database " + (isAdd ? "success" : "failure");
-            resp.getOutputStream().write(msg.getBytes("UTF-8"));
-        } else {
-            String msg = "aniu data write to database " + (1==1 ? "success" : "failure");
-            resp.getOutputStream().write(msg.getBytes("UTF-8"));
-        }
+        msg.zhishu = todayZhiShu != null && updateService.addFundInfoFromZhiShuValue(todayZhiShu);
+
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(msg);
+        resp.getWriter().write(jsonStr);
 
     }
 
@@ -47,7 +58,7 @@ public class FundUpdateServlet extends HttpServlet {
 
             conn = (HttpURLConnection) mUrl.openConnection();
             conn.setRequestProperty("x-sign", "01BMN17A802B00HCW48QFNC7ED"); //且慢校验
-            conn.setRequestProperty("Content-Type","application/json; charset=utf-8");//且慢校验
+            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");//且慢校验
             int responseCode = conn.getResponseCode();
             if (responseCode == 200) {
                 InputStream is = conn.getInputStream();

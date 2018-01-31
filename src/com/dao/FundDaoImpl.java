@@ -96,8 +96,8 @@ public class FundDaoImpl implements IFundDao {
         if (!hasDayFundInfo(tableName, todayStr)) {
             return addFundInfo(tableName, values);
         }
-        String sql = "UPDATE " + tableName + " SET " + COLUMN_FUND_INFO + " = " + values
-                + " WHERE " + COLUMN_FUND_DATE + " = " + todayStr;
+        String sql = "UPDATE " + tableName + " SET " + COLUMN_FUND_INFO + " = \'" + values + "\'"
+                + " WHERE " + COLUMN_FUND_DATE + " =  \'" + todayStr + "\'";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
