@@ -10,7 +10,7 @@ public class DateUtils {
     }
 
     public static String getTodayStr() {
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
         return format.format(new Date());
     }
 }
